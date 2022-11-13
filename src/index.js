@@ -45,6 +45,7 @@ loadBtn.addEventListener("click", () => {
 async function urlResponse(photoName, page) {
     let photoesResponse = await axios.get(`https://pixabay.com/api/?key=${option.key}&q=${photoName}&image_type=${option.image_type}&orientation=${option.orientation}&safesearch=${option.safesearch}&per_page=${option.per_page}&page=${page}`);
     let photoesArr = photoesResponse.data.hits;
+    basicLightbox.refresh();
 
     if (page === 1) {
         Notiflix.Notify.info(`Hooray! We found ${photoesResponse.data.totalHits} images.`)
@@ -54,9 +55,10 @@ async function urlResponse(photoName, page) {
         Notiflix.Notify.failure("Sorry, there are no images matching your search query.Please try again.")
     } else {
         let markap = photoesArr.map((photo) => {
-            return `<a href="${photo.largeImageURL}">
-                <div class="photo-card">
+            return `<div class="photo-card">
+                <a href="${photo.largeImageURL}">
                 <img src="${photo.webformatURL}" alt="${photo.tags}" loading="lazy" width="150px" height="100px"/>
+            </a>
                 <div class="info">
                 <p class="info-item">
                     <b>Likes: ${photo.likes}</b>
@@ -71,9 +73,7 @@ async function urlResponse(photoName, page) {
                     <b>Downloads: ${photo.downloads}</b>
                 </p>
             </div>
-            </div>
-            </a>
-            `
+            </div>`
         }).join("")
         galleryRef.insertAdjacentHTML("beforeend", markap)
         if (photoesResponse.data.totalHits < (parseInt(option.per_page) * page)) {
@@ -81,7 +81,7 @@ async function urlResponse(photoName, page) {
             Notiflix.Notify.info("We're sorry, but you've reached the end of search results.")
         }
     }
-    const basicLightbox = new SimpleLightbox('.gallery a', {
+    const basicLightbox = new SimpleLightbox('.photo-card a', {
         close: false,
         overlayOpacity: 1,
         captionsData: "alt",
