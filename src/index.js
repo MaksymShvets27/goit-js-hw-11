@@ -7,7 +7,7 @@ formRef.setAttribute('style', 'display: flex;justify-content: center;align-items
 const galleryRef = document.querySelector(".gallery");
 galleryRef.setAttribute('style', 'display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;')
 const loadBtn = document.querySelector(".load-more");
-loadBtn.setAttribute("disabled", "");
+loadBtn.setAttribute("style", "display: none");
 
 const option = {
     key: "31277754-8952e55c2ce1852b40f45b8fd",
@@ -72,11 +72,11 @@ async function urlResponse(photoName, page) {
             </div>`
         })
         galleryRef.insertAdjacentHTML("beforeend", markap)
-        loadBtn.removeAttribute("disabled")
+        loadBtn.removeAttribute("style")
         console.log(photoesResponse.data.totalHits, (parseInt(option.per_page) * page))
 
         if (photoesResponse.data.totalHits < (parseInt(option.per_page) * page)) {
-            loadBtn.setAttribute("disabled", "");
+            loadBtn.setAttribute("style", "display: none");
             Notiflix.Notify.info("We're sorry, but you've reached the end of search results.")
         }
     }
