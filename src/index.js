@@ -1,5 +1,6 @@
 import Notiflix from 'notiflix';
 import axios from "axios";
+import SimpleLightbox from "simplelightbox";
 
 const inputRef = document.querySelector("input");
 const formRef = document.querySelector('.search-form');
@@ -17,6 +18,11 @@ const option = {
     per_page: "40"
 }
 
+const basicLightbox = new SimpleLightbox('.gallery a', {
+    close: false,
+    overlayOpacity: 1,
+    captionsData: "alt",
+});
 
 
 let page;
@@ -26,6 +32,7 @@ formRef.addEventListener("submit", (event) => {
     let photoName = inputRef.value;
     page = 1;
     galleryRef.textContent = "";
+    basicLightbox.refresh();
     option.per_page = "40";
     urlResponse(photoName, page);
     loadBtn.setAttribute("style", "display: block; margin: 30px auto; gap: 5px;")
@@ -33,6 +40,7 @@ formRef.addEventListener("submit", (event) => {
 
 loadBtn.addEventListener("click", () => {
     galleryRef.textContent = "";
+    basicLightbox.refresh();
     let photoName = inputRef.value;
     page += 1;
     urlResponse(photoName, page);
@@ -53,8 +61,10 @@ async function urlResponse(photoName, page) {
     } else {
         let markap = photoesArr.map((photo) => {
             return `<div class="photo-card">
+                <a href="${photo.largeImageURL}">
                 <img src="${photo.webformatURL}" alt="${photo.tags}" loading="lazy" width="150px" height="100px"/>
-            <div class="info">
+            </a>
+                <div class="info">
                 <p class="info-item">
                     <b>Likes: ${photo.likes}</b>
                 </p>
