@@ -45,7 +45,6 @@ loadBtn.addEventListener("click", () => {
 async function urlResponse(photoName, page) {
     let photoesResponse = await axios.get(`https://pixabay.com/api/?key=${option.key}&q=${photoName}&image_type=${option.image_type}&orientation=${option.orientation}&safesearch=${option.safesearch}&per_page=${option.per_page}&page=${page}`);
     let photoesArr = photoesResponse.data.hits;
-    basicLightbox.refresh();
 
     if (page === 1) {
         Notiflix.Notify.info(`Hooray! We found ${photoesResponse.data.totalHits} images.`)
@@ -55,8 +54,8 @@ async function urlResponse(photoName, page) {
         Notiflix.Notify.failure("Sorry, there are no images matching your search query.Please try again.")
     } else {
         let markap = photoesArr.map((photo) => {
-            return `
-                <a href="${photo.largeImageURL}"><div class="photo-card">
+            return `<a href="${photo.largeImageURL}">
+                <div class="photo-card">
                 <img src="${photo.webformatURL}" alt="${photo.tags}" loading="lazy" width="150px" height="100px"/>
                 <div class="info">
                 <p class="info-item">
