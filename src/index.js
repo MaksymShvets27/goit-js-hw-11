@@ -28,7 +28,7 @@ formRef.addEventListener("submit", (event) => {
     galleryRef.textContent = "";
     option.per_page = "40";
     urlResponse(photoName, page);
-    console.log(page)
+    loadBtn.setAttribute("style", "display: flex; justify-content: center;align-items: center;padding: 30px 0; gap: 5px;")
 })
 
 loadBtn.addEventListener("click", () => {
@@ -69,11 +69,8 @@ async function urlResponse(photoName, page) {
                 </p>
             </div>
             </div>`
-        })
+        }).join("")
         galleryRef.insertAdjacentHTML("beforeend", markap)
-        loadBtn.setAttribute("style", "display: flex; justify-content: center;align-items: center;padding: 30px 0; gap: 5px;")
-        console.log(photoesResponse.data.totalHits, (parseInt(option.per_page) * page))
-
         if (photoesResponse.data.totalHits < (parseInt(option.per_page) * page)) {
             loadBtn.setAttribute("style", "display: none");
             Notiflix.Notify.info("We're sorry, but you've reached the end of search results.")
