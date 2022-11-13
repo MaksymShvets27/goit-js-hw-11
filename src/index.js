@@ -55,10 +55,9 @@ async function urlResponse(photoName, page) {
         Notiflix.Notify.failure("Sorry, there are no images matching your search query.Please try again.")
     } else {
         let markap = photoesArr.map((photo) => {
-            return `<div class="photo-card">
-                <a href="${photo.largeImageURL}">
+            return `
+                <a href="${photo.largeImageURL}"><div class="photo-card">
                 <img src="${photo.webformatURL}" alt="${photo.tags}" loading="lazy" width="150px" height="100px"/>
-            </a>
                 <div class="info">
                 <p class="info-item">
                     <b>Likes: ${photo.likes}</b>
@@ -73,7 +72,9 @@ async function urlResponse(photoName, page) {
                     <b>Downloads: ${photo.downloads}</b>
                 </p>
             </div>
-            </div>`
+            </div>
+            </a>
+            `
         }).join("")
         galleryRef.insertAdjacentHTML("beforeend", markap)
         if (photoesResponse.data.totalHits < (parseInt(option.per_page) * page)) {
