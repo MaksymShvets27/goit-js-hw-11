@@ -7,7 +7,7 @@ formRef.setAttribute('style', 'display: flex;justify-content: center;align-items
 const galleryRef = document.querySelector(".gallery");
 galleryRef.setAttribute('style', 'display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;')
 const loadBtn = document.querySelector(".load-more");
-loadBtn.setAttribute("style", "display: none; justify-content: center;align-items: center;padding: 30px 0; gap: 5px;");
+loadBtn.setAttribute("style", "display: none;");
 
 const option = {
     key: "31277754-8952e55c2ce1852b40f45b8fd",
@@ -52,8 +52,7 @@ async function urlResponse(photoName, page) {
         Notiflix.Notify.failure("Sorry, there are no images matching your search query.Please try again.")
     } else {
         let markap = photoesArr.map((photo) => {
-            return `
-            <div class="photo-card">
+            return `<div class="photo-card">
                 <img src="${photo.webformatURL}" alt="${photo.tags}" loading="lazy" width="150px" height="100px"/>
             <div class="info">
                 <p class="info-item">
@@ -72,11 +71,11 @@ async function urlResponse(photoName, page) {
             </div>`
         })
         galleryRef.insertAdjacentHTML("beforeend", markap)
-        loadBtn.removeAttribute("style")
+        loadBtn.setAttribute("style", "display: flex; justify-content: center;align-items: center;padding: 30px 0; gap: 5px;")
         console.log(photoesResponse.data.totalHits, (parseInt(option.per_page) * page))
 
         if (photoesResponse.data.totalHits < (parseInt(option.per_page) * page)) {
-            loadBtn.setAttribute("style", "display: none; justify-content: center;align-items: center;padding: 30px 0; gap: 5px;");
+            loadBtn.setAttribute("style", "display: none");
             Notiflix.Notify.info("We're sorry, but you've reached the end of search results.")
         }
     }
