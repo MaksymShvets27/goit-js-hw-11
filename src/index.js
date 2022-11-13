@@ -28,7 +28,6 @@ formRef.addEventListener("submit", (event) => {
     let photoName = inputRef.value;
     page = 1;
     galleryRef.textContent = "";
-    basicLightbox.refresh();
     option.per_page = "40";
     urlResponse(photoName, page);
     loadBtn.setAttribute("style", "display: block; margin: 30px auto; gap: 5px;")
@@ -36,7 +35,6 @@ formRef.addEventListener("submit", (event) => {
 
 loadBtn.addEventListener("click", () => {
     galleryRef.textContent = "";
-    basicLightbox.refresh();
     let photoName = inputRef.value;
     page += 1;
     urlResponse(photoName, page);
@@ -47,6 +45,7 @@ loadBtn.addEventListener("click", () => {
 async function urlResponse(photoName, page) {
     let photoesResponse = await axios.get(`https://pixabay.com/api/?key=${option.key}&q=${photoName}&image_type=${option.image_type}&orientation=${option.orientation}&safesearch=${option.safesearch}&per_page=${option.per_page}&page=${page}`);
     let photoesArr = photoesResponse.data.hits;
+    basicLightbox.refresh();
 
     if (page === 1) {
         Notiflix.Notify.info(`Hooray! We found ${photoesResponse.data.totalHits} images.`)
@@ -82,10 +81,11 @@ async function urlResponse(photoName, page) {
             Notiflix.Notify.info("We're sorry, but you've reached the end of search results.")
         }
     }
+    const basicLightbox = new SimpleLightbox('.gallery a', {
+        close: false,
+        overlayOpacity: 1,
+        captionsData: "alt",
+    });
+
 }
 
-const basicLightbox = new SimpleLightbox('.gallery a', {
-    close: false,
-    overlayOpacity: 1,
-    captionsData: "alt",
-});
