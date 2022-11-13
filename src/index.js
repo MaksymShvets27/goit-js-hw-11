@@ -28,7 +28,7 @@ formRef.addEventListener("submit", (event) => {
     galleryRef.textContent = "";
     option.per_page = "40";
     urlResponse(photoName, page);
-    loadBtn.setAttribute("style", "display: flex; justify-content: center;align-items: center;padding: 30px 0; gap: 5px;")
+    loadBtn.setAttribute("style", "margin: 30px auto; gap: 5px;")
 })
 
 loadBtn.addEventListener("click", () => {
