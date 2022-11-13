@@ -19,11 +19,6 @@ const option = {
     per_page: "40"
 }
 
-const basicLightbox = new SimpleLightbox('.gallery a', {
-    close: false,
-    overlayOpacity: 1,
-    captionsData: "alt",
-});
 
 
 let page;
@@ -88,3 +83,9 @@ async function urlResponse(photoName, page) {
         }
     }
 }
+
+const basicLightbox = new SimpleLightbox('.gallery a', {
+    close: false,
+    overlayOpacity: 1,
+    captionsData: "alt",
+});
